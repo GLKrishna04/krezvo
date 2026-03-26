@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
@@ -10,7 +8,7 @@ export async function POST(request) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Email మరియు Password enter చేయండి!" },
+        { error: "Email and Password are required!" },
         { status: 400 }
       );
     }
@@ -21,7 +19,7 @@ export async function POST(request) {
 
     if (!business) {
       return NextResponse.json(
-        { error: "Email found కాలేదు!" },
+        { error: "Email not found!" },
         { status: 404 }
       );
     }
@@ -30,7 +28,7 @@ export async function POST(request) {
 
     if (!isValid) {
       return NextResponse.json(
-        { error: "Password తప్పు!" },
+        { error: "Incorrect password!" },
         { status: 401 }
       );
     }

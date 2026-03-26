@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/app/lib/prisma";
 
 export async function GET(request, { params }) {
   try {
@@ -13,7 +11,10 @@ export async function GET(request, { params }) {
     });
 
     if (!business) {
-      return NextResponse.json({ error: "Business not found!" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Business not found!" },
+        { status: 404 }
+      );
     }
 
     const services = await prisma.service.findMany({
@@ -25,6 +26,9 @@ export async function GET(request, { params }) {
 
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Server error!" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Server error!" },
+      { status: 500 }
+    );
   }
 }

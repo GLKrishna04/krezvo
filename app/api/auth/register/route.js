@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
@@ -10,7 +8,7 @@ export async function POST(request) {
 
     if (!name || !email || !password) {
       return NextResponse.json(
-        { error: "Name, Email, Password తప్పనిసరి!" },
+        { error: "Name, Email, Password are required!" },
         { status: 400 }
       );
     }
@@ -21,7 +19,7 @@ export async function POST(request) {
 
     if (existing) {
       return NextResponse.json(
-        { error: "ఈ email already registered!" },
+        { error: "Email already registered!" },
         { status: 400 }
       );
     }

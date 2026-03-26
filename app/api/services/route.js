@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/app/lib/prisma";
 
 export async function POST(request) {
   try {
@@ -15,12 +13,7 @@ export async function POST(request) {
     }
 
     const service = await prisma.service.create({
-      data: {
-        name,
-        price,
-        duration,
-        businessId,
-      },
+      data: { name, price, duration, businessId },
     });
 
     return NextResponse.json(
