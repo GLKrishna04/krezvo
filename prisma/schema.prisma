@@ -63,10 +63,19 @@ model Review {
 model Staff {
   id         String   @id @default(cuid())
   name       String
-  email      String?
+  email      String?  @unique
   phone      String?
   role       String   @default("staff")
+  password   String?
   businessId String
   business   Business @relation(fields: [businessId], references: [id])
   createdAt  DateTime @default(now())
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
 }
