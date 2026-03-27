@@ -10,7 +10,7 @@ export default function Staff() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", role: "staff" });
+const [form, setForm] = useState({ name: "", email: "", phone: "", role: "staff", password: "" });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -104,6 +104,7 @@ export default function Staff() {
             <input className="inp" type="text" placeholder="Full Name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}/>
             <input className="inp" type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}/>
             <input className="inp" type="tel" placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}/>
+            <input className="inp" type="password" placeholder="Set Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}/>
             <select className="inp" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
               <option value="staff">Staff</option>
               <option value="manager">Manager</option>

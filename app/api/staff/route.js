@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import bcrypt from "bcryptjs";
 
 export async function GET(request) {
   try {
@@ -19,10 +20,11 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { name, email, phone, role, businessId } = await request.json();
+    const { name, email, phone, role, businessId, password } = await request.json();
     if (!name || !businessId) return NextResponse.json({ error: "Name is required!" }, { status: 400 });
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
     const staff = await prisma.staff.create({
-      data: { name, email: email || null, phone: phone || null, role: role || "staff", businessId },
+      data: { name, email: email || null, phone: phone || null, role: role || "staff", businessId, password: hashedPassword },
     });
     return NextResponse.json({ message: "Staff added!", staff }, { status: 201 });
   } catch (error) {
